@@ -24,8 +24,8 @@ DITO_DESTRA = "👉🏻"
 global products_data, last_price
 
 
-#id_gruppo dove vengono mandati i messaggi
-id_gruppo = INSERT_YOUR_CHAT_ID_HERE
+#group_id dove vengono mandati i messaggi
+group_id = INSERT_YOUR_CHAT_ID_HERE
 
 
 bot = telegram.Bot(token=TOKEN)
@@ -33,7 +33,7 @@ bot = telegram.Bot(token=TOKEN)
 
 # Funzione per gestire il comando /start del bot
 def start(update, context):
-    context.bot.send_message(chat_id=id_gruppo, text="Ciao! Sono un sul monitoraggio dei prezzi. Inviami il comando /check per verificare il prezzo del prodotto.")
+    context.bot.send_message(chat_id=group_id, text="Ciao! Sono un sul monitoraggio dei prezzi. Inviami il comando /check per verificare il prezzo del prodotto.")
 
 
 # Funzione per l'estrazione dei dati dalla pagina di Unieuro
@@ -72,7 +72,6 @@ def get_products_data(url):
     return data
 
 
-
 # Salva gli ultimi prezzi noti degli articoli
 last_price = {}
 
@@ -90,7 +89,7 @@ def check_price():
                 decrease = round((1 - (discounted_price / last_price[name])) * 100)
                 if decrease >= MIN_PERCENTAGE_DECREASE:
                     message = f"Ottime notizie! Il prezzo di: \n\n{DITO_DESTRA} <b>{name}</b>\n\nè diminuito del <b>{ARROW_DOWN} {percentage_decrease}%</b>!\n\nPrezzo originale: <b>€{original_price:.2f}</b>\nPrezzo scontato: <b>€{product['discounted_price']:.2f}</b> {SOLDI}\n\nEcco il link dell'articolo:\n\n{link} "
-                    bot.send_message(chat_id=id_gruppo, text=message)
+                    bot.send_message(chat_id=group_id, text=message)
         last_price[name] = discounted_price
     print("last_price: ", last_price)
 
@@ -115,7 +114,6 @@ def run():
     print("Bot avviato!")
 
     # Programma l'esecuzione della funzione di check ogni 5 secondi
-    # schedule.every(20).seconds.do(check)
     schedule.every(5).seconds.do(check_price)
 
     while True:
