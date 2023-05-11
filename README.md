@@ -6,7 +6,7 @@ Il bot è progettato per monitorare i prezzi dei prodotti su un sito web e invia
 
 
 
-Funzionamento:
+Funzionamento
 
 Il bot utilizza la libreria python-telegram-bot per interagire con l'API di Telegram.
 Utilizza anche le librerie requests e beautifulsoup4 per effettuare scraping dei dati dalla pagina web del sito di e-commerce.
